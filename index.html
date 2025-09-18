@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zendesk SOP - Revyse Support Team</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --curious-blue: #008CC1;
+            --bright-coral: #FE5442;
+            --some-grey: #2F373D;
+            --light-blue: #F3FAFF;
+            --white: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            line-height: 1.6;
+            background: linear-gradient(135deg, var(--curious-blue) 0%, var(--some-grey) 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--some-grey);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(47, 55, 61, 0.15);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--some-grey) 0%, var(--curious-blue) 100%);
+            color: var(--white);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(254, 84, 66, 0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) rotate(180deg); }
+        }
+
+        .header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-tagline {
+            background: var(--bright-coral);
+            color: var(--white);
+            padding: 15px 30px;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .quick-ref {
+            background: linear-gradient(135deg, var(--curious-blue) 0%, var(--some-grey) 100%);
+            color: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quick-ref h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quick-ref h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .sla-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .sla-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(254, 84, 66, 0.3);
+            padding: 20px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .sla-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--bright-coral);
+            background: rgba(254, 84, 66, 0.1);
+        }
+
+        .sla-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--white);
+        }
+
+        .priority-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            transform: scale(1.05);
+            border-color: var(--bright-coral);
+        }
+
+        .urgent { background: rgba(254, 84, 66, 0.2); }
+        .high { background: rgba(245, 158, 11, 0.2); }
+        .normal { background: rgba(34, 197, 94, 0.2); }
+        .low { background: rgba(0, 140, 193, 0.2); }
+
+        .section {
+            margin: 40px 0;
+            padding: 30px;
+            background: var(--light-blue);
+            border-radius: 15px;
+            border-left: 5px solid var(--curious-blue);
+            position: relative;
+        }
+
+        .section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--some-grey);
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            color: var(--some-grey);
+            font-size: 1.3rem;
+            margin: 25px 0 15px 0;
+        }
+
+        .section-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--curious-blue) 0%, var(--bright-coral) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .process-steps {
+            display: grid;
+            gap: 20px;
+        }
+
+        .step {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(47, 55, 61, 0.05);
+            border-left: 4px solid var(--curious-blue);
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(47, 55, 61, 0.1);
+            border-left-color: var(--bright-coral);
+        }
+
+        .step h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--curious-blue);
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .matrix-table {
+            background: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(47, 55, 61, 0.1);
+            margin: 20px 0;
+            border: 2px solid var(--light-blue);
+        }
+
+        .matrix-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .matrix-table th {
+            background: linear-gradient(135deg, var(--curious-blue) 0%, var(--some-grey) 100%);
+            color: var(--white);
+            padding: 15px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .matrix-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--light-blue);
+            transition: background 0.3s ease;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .matrix-table tr:hover td {
+            background: var(--light-blue);
+        }
+
+        .template-box {
+            background: var(--light-blue);
+            border: 2px solid var(--curious-blue);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Lato', sans-serif;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .template-box:hover {
+            border-color: var(--bright-coral);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            background: var(--some-grey);
+            color: var(--white);
+            text-align: center;
+            padding: 30px;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+        }
+
+        .footer a {
+            color: var(--bright-coral);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--curious-blue);
+        }
+
+        a {
+            color: var(--curious-blue);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        a:hover {
+            color: var(--bright-coral);
+            text-decoration: underline;
+        }
+
+        code {
+            background: var(--light-blue);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            border: 1px solid var(--curious-blue);
+        }
+
+        .status-workflow {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .status-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(47, 55, 61, 0.1);
+            border-top: 4px solid;
+            transition: all 0.3s ease;
+        }
+
+        .status-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(47, 55, 61, 0.15);
+        }
+
+        .status-card h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--some-grey);
+            margin-bottom: 10px;
+        }
+
+        .status-new { border-top-color: var(--curious-blue); }
+        .status-open { border-top-color: #10b981; }
+        .status-progress { border-top-color: var(--bright-coral); }
+        .status-pending { border-top-color: #8b5cf6; }
+        .status-solved { border-top-color: var(--some-grey); }
+
+        .value-highlight {
+            background: linear-gradient(135deg, var(--light-blue) 0%, var(--white) 100%);
+            border-left: 4px solid var(--bright-coral);
+            padding: 15px 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .value-highlight strong {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            color: var(--curious-blue);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .sla-grid { grid-template-columns: 1fr; }
+            .content { padding: 20px; }
+            .section { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Zendesk SOP</h1>
+            <p>Revyse Support Team Guide • Last Updated: Sept 2025</p>
+        </header>
+
+        <div class="brand-tagline">
+            Turn vendor chaos into clarity. Support Edition
+        </div>
+
+        <div class="content">
+            <!-- Quick Reference Section -->
+            <section class="quick-ref">
+                <h2>Quick Reference</h2>
+                
+                <div class="sla-grid">
+                    <div class="sla-card">
+                        <h3>Operators</h3>
+                        <p><strong>First Reply:</strong> 2 hours</p>
+                        <p><strong>Resolution:</strong> 2 days</p>
+                        <p><strong>Hours:</strong> M-F 9AM-6PM EST</p>
+                    </div>
+                    <div class="sla-card">
+                        <h3>Vendors</h3>
+                        <p><strong>First Reply:</strong> 1 business day</p>
+                        <p><strong>Resolution:</strong> 5 days</p>
+                        <p><strong>Hours:</strong> M-F 9AM-6PM EST</p>
+                    </div>
+                </div>
+
+                <h3>Priority Levels</h3>
+                <div class="priority-badges">
+                    <span class="badge urgent">🔴 Urgent: Severe impact, no workaround</span>
+                    <span class="badge high">🟠 High: Business impact with workaround</span>
+                    <span class="badge normal">🟡 Normal: Standard support requests</span>
+                    <span class="badge low">🟢 Low: General how-to questions</span>
+                </div>
+
+                <h3>Emergency Escalation</h3>
+                <p><strong>Urgent tickets:</strong> Slack @channel in #ticket-trio</p>
+                <p><strong>After hours P1:</strong> Text Stephany Mesa (817)-312-8186</p>
+            </section>
+
+            <!-- Ticket Intake -->
+            <section class="section">
+                <h2><span class="section-icon">1</span>Ticket Intake & Routing</h2>
+                
+                <h3>Supported Channels</h3>
+                <div class="process-steps">
+                    <div class="step">
+                        <h4>Support Widget (Primary)</h4>
+                        <p>Embedded in product</p>
+                    </div>
+                    <div class="step">
+                        <h4>Email</h4>
+                        <p>support@revyse.com</p>
+                    </div>
+                    <div class="step">
+                        <h4>Knowledge Base</h4>
+                        <p><a href="https://support.revyse.com/hc/en-us" target="_blank">https://support.revyse.com/hc/en-us</a></p>
+                    </div>
+                </div>
+
+                <h3>Auto-Routing Rules</h3>
+                <div class="process-steps">
+                    <div class="step">
+                        <p>• Widget submissions auto-tag <strong>Customer Type</strong>: <code>Operator</code> or <code>Vendor</code></p>
+                        <p>• Email submissions require manual customer type assignment</p>
+                        <p>• All tickets land in <strong>Unassigned</strong> queue first</p>
+                    </div>
+                </div>
+
+                <div class="value-highlight">
+                    <strong>Transparency & Trust:</strong> Trust thrives in transparency. Keep customers informed at every step—share what you know, what you're doing, and what comes next.
+                </div>
+            </section>
+
+            <!-- Ticket Triage -->
+            <section class="section">
+                <h2><span class="section-icon">2</span>Ticket Triage (Must Complete Within 1 Hour)</h2>
+
+                <h3>Step-by-Step Triage Process</h3>
+                <div class="process-steps">
+                    <div class="step">
+                        <h4>1. Assignment</h4>
+                        <div class="template-box">
+                            Views → Unassigned Tickets → Select Ticket(s) → Edit → Assignee → CX → [Name] → Submit
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <h4>2. Customer Type (if not auto-assigned)</h4>
+                        <p>• <strong>Operator</strong> - Property management companies using Revyse</p>
+                        <p>• <strong>Vendor</strong> - Service providers in marketplace</p>
+                    </div>
+                    
+                    <div class="step">
+                        <h4>3. Ticket Type</h4>
+                        <p>• <strong>Question</strong> - General how-to or clarification</p>
+                        <p>• <strong>Incident</strong> - System outage, bug, or broken functionality</p>
+                        <p>• <strong>Task</strong> - Action required (uploads, data cleanup, account changes)</p>
+                        <p>• <strong>Problem</strong> - Recurring issue affecting multiple customers</p>
+                    </div>
+                    
+                    <div class="step">
+                        <h4>4. Priority Assessment Matrix</h4>
+                        <div class="matrix-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Impact</th>
+                                        <th>Urgency</th>
+                                        <th>Priority</th>
+                                        <th>Examples</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>High</td>
+                                        <td>High</td>
+                                        <td>🔴 Urgent</td>
+                                        <td>System down, can't access platform, blocking onboarding</td>
+                                    </tr>
+                                    <tr>
+                                        <td>High</td>
+                                        <td>Low</td>
+                                        <td>🟠 High</td>
+                                        <td>Feature broken but workaround exists</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Low</td>
+                                        <td>High</td>
+                                        <td>🟡 Normal</td>
+                                        <td>How-to question needed quickly</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Low</td>
+                                        <td>Low</td>
+                                        <td>🟢 Low</td>
+                                        <td>General questions, feature requests</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <h4>5. Product Area Assignment</h4>
+                        <p>• <strong>Contract Management (Zipline)</strong> - Renewals, uploads, line items, contract lifecycle</p>
+                        <p>• <strong>Vendor Credentialing</strong> - Insurance docs, compliance, risk tiers, certifications</p>
+                        <p>• <strong>Discovery Marketplace</strong> - Vendor listings, subscriptions, reviews, search</p>
+                        <p>• <strong>Contract Execution</strong> - Templates, countersigners, dynamic variables, e-signatures</p>
+                        <p>• <strong>Property Docs</strong> - Inspection docs, licenses, NFPA, property-level uploads</p>
+                        <p>• <strong>Billing</strong> - RVI invoicing and payment issues (Operators only)</p>
+                        <p>• <strong>Talk to Sales</strong> - Demo requests, expansion conversations</p>
+                        <p>• <strong>Other/Escalation</strong> - Technical bugs, feature requests, unusual scenarios</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Status Workflow -->
+            <section class="section">
+                <h2><span class="section-icon">3</span>Ticket Status Workflow</h2>
+                
+                <h3>Status Definitions & Actions</h3>
+                <div class="status-workflow">
+                    <div class="status-card status-new">
+                        <h4>New</h4>
+                        <p>• System default for incoming tickets</p>
+                        <p>• <strong>Action Required:</strong> Triage within 1 hour, assign within SLA first-response time</p>
+                        <p>• <strong>SLA Status:</strong> Clock running</p>
+                    </div>
+                    <div class="status-card status-open">
+                        <h4>Open</h4>
+                        <p>• Agent ownership assigned, queued for work</p>
+                        <p>• <strong>Action Required:</strong> Begin work or provide initial response within SLA</p>
+                        <p>• <strong>SLA Status:</strong> Clock running</p>
+                    </div>
+                    <div class="status-card status-progress">
+                        <h4>In Progress</h4>
+                        <p>• Agent actively working on request</p>
+                        <p>• <strong>Action Required:</strong> Update customer within SLA timeframe</p>
+                        <p>• <strong>SLA Status:</strong> Clock running until customer response sent</p>
+                    </div>
+                    <div class="status-card status-pending">
+                        <h4>Pending</h4>
+                        <p>• Waiting on customer response or external dependency</p>
+                        <p>• <strong>Action Required:</strong> Set follow-up reminders, document what you're waiting for</p>
+                        <p>• <strong>SLA Status:</strong> Clock paused</p>
+                    </div>
+                    <div class="status-card status-solved">
+                        <h4>Solved</h4>
+                        <p>• Resolution provided to customer</p>
+                        <p>• <strong>Auto-behavior:</strong> Reopens to "Open" if customer replies within 4 days</p>
+                        <p>• <strong>SLA Status:</strong> Clock stopped</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Communication Standards -->
+            <section class="section">
+                <h2><span class="section-icon">4</span>Communication Standards</h2>
+                
+                <div class="value-highlight">
+                    <strong>Humility & Authenticity:</strong> No fluff—just authenticity. We show up as our genuine selves, balancing professionalism with being human.
+                </div>
+                
+                <h3>Our Voice & Tone</h3>
+                <p><strong>Think:</strong> Casual coffee chat with a multifamily professional who needs real help, not corporate-speak</p>
+                
+                <div class="process-steps">
+                    <div class="step">
+                        <h4>Do</h4>
+                        <p>• Keep it conversational, not corporate<br>
+                        • Be friendly without being overly formal<br>
+                        • Stay optimistic and solution-focused<br>
+                        • Include KB links naturally: "Here's the guide that covers this →"<br>
+                        • Set clear expectations like texting a trusted colleague</p>
+                    </div>
+                    <div class="step">
+                        <h4>Don't</h4>
+                        <p>• Overuse exclamation points (we're helpful, not cheerleaders)<br>
+                        • Use jargon that makes customers Google on the side<br>
+                        • Make vague promises like "we'll look into it"<br>
+                        • Write legal briefs when a simple explanation works<br>
+                        • Hide behind corporate walls when things go wrong</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer class="footer">
+            <p>Questions about this SOP? Post in <strong>#cx-team</strong> or DM <a href="#">@Stephany Mesa</a></p>
+        </footer>
+    </div>
+</body>
+</html>
